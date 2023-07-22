@@ -53,6 +53,7 @@ def should_use_data():
         return True
     return False
 
+
 def prepare_body_headers_with_data(request):
     request_messages = request.json["messages"]
 

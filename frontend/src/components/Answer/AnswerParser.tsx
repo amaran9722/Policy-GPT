@@ -7,6 +7,7 @@ type ParsedAnswer = {
     markdownFormatText: string;
 };
 
+//Citations happen here - Anand Maran - Imp
 export function parseAnswer(answer: AskResponse): ParsedAnswer {
     let answerText = answer.answer;
     const citationLinks = answerText.match(/\[(doc\d\d?\d?)]/g);
