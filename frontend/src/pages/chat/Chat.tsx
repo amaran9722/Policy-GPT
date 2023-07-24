@@ -130,7 +130,9 @@ const Chat = () => {
 
     useEffect(() => chatMessageStreamEnd.current?.scrollIntoView({ behavior: "smooth" }), [showLoadingMessage]);
 
+//Citation Start - Anand Maran - Keep a breakpoint here to debug the citation panel.
     const onShowCitation = (citation: Citation) => {
+        console.log(citation);
         setActiveCitation([citation.content, citation.id, citation.title ?? "", citation.filepath ?? "", "", ""]);
         setIsCitationPanelOpen(true);
     };
@@ -139,6 +141,7 @@ const Chat = () => {
         if (message.role === "tool") {
             try {
                 const toolMessage = JSON.parse(message.content) as ToolMessageContent;
+               
                 return toolMessage.citations;
             }
             catch {
@@ -147,6 +150,8 @@ const Chat = () => {
         }
         return [];
     }
+
+    //Citation End - Anand Maran 
 
     return (
         <div className={styles.container} role="main">
@@ -173,8 +178,8 @@ const Chat = () => {
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
-                                <h1 className={styles.chatEmptyStateTitle}>Start chatting</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>This chatbot is configured to answer your questions</h2>
+                                <h1 className={styles.chatEmptyStateTitle}>Policy&nbsp;<u>GPT</u></h1>
+                                <h2 className={styles.chatEmptyStateSubtitle}>Discover, Query, and Summarise Deloitte's policies.</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
@@ -188,10 +193,11 @@ const Chat = () => {
                                             answer.role === "assistant" ? <div className={styles.chatMessageGpt}>
                                                 <Answer
                                                     answer={{
+                                                        
                                                         answer: answer.content,
                                                         citations: parseCitationFromMessage(answers[index - 1]),
                                                     }}
-                                                    onCitationClicked={c => onShowCitation(c)}
+                                                    onCitationClicked={c => onShowCitation(c)}//need to debug here
                                                 />
                                             </div> : answer.role === "error" ? <div className={styles.chatMessageError}>
                                                 <Stack horizontal className={styles.chatMessageErrorContent}>
@@ -254,7 +260,7 @@ const Chat = () => {
                             </div>
                             <QuestionInput
                                 clearOnSend
-                                placeholder="Type a new question..."
+                                placeholder="Just ask, summarise parental leave policy..."
                                 disabled={isLoading}
                                 onSend={question => makeApiRequest(question)}
                             />

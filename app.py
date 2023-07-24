@@ -48,12 +48,15 @@ def is_chat_model():
         return True
     return False
 
+#STEP 2 : The purpose of this function is to help the application decide whether 
+# it has the necessary data
+# to use Azure Cognitive Search as a data source for the conversation with the Azure Chat GPT API. 
 def should_use_data():
     if AZURE_SEARCH_SERVICE and AZURE_SEARCH_INDEX and AZURE_SEARCH_KEY:
         return True
     return False
 
-
+#Step 3 : The purpose of this function is to populate the AZ search service.
 def prepare_body_headers_with_data(request):
     request_messages = request.json["messages"]
 
@@ -144,7 +147,7 @@ def stream_with_data(body, headers, endpoint):
     except Exception as e:
         yield json.dumps({"error": str(e)}).replace("\n", "\\n") + "\n"
 
-
+#step 2 a : If AZ Cog search is the DS, then prepare the body and headers for the request to the Azure Chat GPT API.
 def conversation_with_data(request):
     body, headers = prepare_body_headers_with_data(request)
     endpoint = f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/openai/deployments/{AZURE_OPENAI_MODEL}/extensions/chat/completions?api-version={AZURE_OPENAI_PREVIEW_API_VERSION}"
@@ -234,10 +237,11 @@ def conversation_without_data(request):
         else:
             return Response(None, mimetype='text/event-stream')
 
+# STEP 1 : This is the main entry point for the chatbot. - Anand Maran
 @app.route("/conversation", methods=["GET", "POST"])
 def conversation():
     try:
-        use_data = should_use_data()
+        use_data = should_use_data() # check if the application has the necessary data to use Azure Cognitive Search as a data source for the conversation with the Azure Chat GPT API.
         if use_data:
             return conversation_with_data(request)
         else:
