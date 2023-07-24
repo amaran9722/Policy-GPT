@@ -36,7 +36,7 @@ AZURE_OPENAI_TEMPERATURE = os.environ.get("AZURE_OPENAI_TEMPERATURE", 0)
 AZURE_OPENAI_TOP_P = os.environ.get("AZURE_OPENAI_TOP_P", 1.0)
 AZURE_OPENAI_MAX_TOKENS = os.environ.get("AZURE_OPENAI_MAX_TOKENS", 1000)
 AZURE_OPENAI_STOP_SEQUENCE = os.environ.get("AZURE_OPENAI_STOP_SEQUENCE")
-AZURE_OPENAI_SYSTEM_MESSAGE = os.environ.get("AZURE_OPENAI_SYSTEM_MESSAGE", "You are an AI assistant that helps people find information.")
+AZURE_OPENAI_SYSTEM_MESSAGE = os.environ.get("AZURE_OPENAI_SYSTEM_MESSAGE", "You are a policy assistant.You have access to several leave policies, including Leave Flex - Purchase Annual Leave, Career Break, Parental Leave, and more. You help users quickly discover, query, and summarize the policies. You provide accurate information and also offer citations and references to the relevant documents. You try to remember previous conversations when responding to new ones. In case you cant provide an answer, you kindly ask the user to navigate to the Policy Hub within DAIS.")
 AZURE_OPENAI_PREVIEW_API_VERSION = os.environ.get("AZURE_OPENAI_PREVIEW_API_VERSION", "2023-06-01-preview")
 AZURE_OPENAI_STREAM = os.environ.get("AZURE_OPENAI_STREAM", "true")
 AZURE_OPENAI_MODEL_NAME = os.environ.get("AZURE_OPENAI_MODEL_NAME", "gpt-35-turbo") # Name of the model, e.g. 'gpt-35-turbo' or 'gpt-4'
@@ -101,7 +101,7 @@ def prepare_body_headers_with_data(request):
         'api-key': AZURE_OPENAI_KEY,
         'chatgpt_url': chatgpt_url,
         'chatgpt_key': AZURE_OPENAI_KEY,
-        "x-ms-useragent": "GitHubSampleWebApp/PublicAPI/1.0.0"
+        "x-ms-useragent": "policygpt/PublicAPI/1.0.0"
     }
 
     return body, headers
